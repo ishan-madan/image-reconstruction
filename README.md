@@ -58,41 +58,45 @@ The result is a comprehensive framework that demonstrates sparse signal recovery
 ## $\textsf{\color{lightgreen} Pipeline Overview}$
 
 ### **1. Image Processing**
-- Load → grayscale → convert to float → optional normalization
+- Load image
 
-### **2. Pixel Removal**
+### **2. Convert to Grayscale or RGB**
+- Depending on selected script.
+- Optional normalization
+
+### **3. Pixel Removal**
 - Randomly sets a chosen fraction of pixels to `NaN`
 - Saves corrupted result to CSV  
   (`field_test_image.csv`)
 
-### **3. Visualization**
+### **4. Visualization**
 - Corrupted image with missing pixels in red
 - Extracted 8×8 example chip
 
-### **4. Basis Construction**
+### **5. Basis Construction**
 - Builds 64 basis chips using:
   \[
   \cos\left(\frac{\pi}{N}(x+0.5)u\right)\cos\left(\frac{\pi}{N}(y+0.5)v\right)
   \]
 - Creates a 64×64 basis matrix
 
-### **5. LASSO Reconstruction**
+### **6. LASSO Reconstruction**
 - Solves:
   \[
   \min_w \|A_\text{obs} w - y_\text{obs}\|^2 + \lambda \|w\|_1
   \]
 - Reconstructs the chip using sparse coefficients  
 
-### **6. Cross-Validation**
+### **7. Cross-Validation**
 - 10-fold CV on observed pixels  
 - Finds the λ with minimum MSE
 
-### **7. Full-Image Recovery**
+### **8. Full-Image Recovery**
 - Applies chip-wise reconstruction to entire image
 - Uses block-wise best λ
 - Optionally applies median filtering
 
-### **8. Diagnostics**
+### **9. Diagnostics**
 - Weight stem plots  
 - CV curves  
 - λ heatmap  
